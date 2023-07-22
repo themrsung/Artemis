@@ -8,8 +8,8 @@ import java.awt.event.WindowEvent;
 /**
  * <h2>ExitOnCloseListener</h2>
  * <p>
- *     This will stop the engine when the window is closed.
- *     Add this listener to the window in order to add this behavior.
+ * This will stop the engine when the window is closed.
+ * Add this listener to the window in order to add this behavior.
  * </p>
  */
 public final class ExitOnCloseListener extends WindowAdapter {

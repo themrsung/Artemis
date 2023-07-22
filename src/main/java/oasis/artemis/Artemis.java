@@ -2,12 +2,16 @@ package oasis.artemis;
 
 import oasis.artemis.event.lifecycle.EventManager;
 import oasis.artemis.level.lifecycle.LevelManager;
+import oasis.artemis.network.SessionManager;
 import oasis.artemis.task.lifecycle.AsyncScheduler;
 import oasis.artemis.task.lifecycle.Scheduler;
 import oasis.artemis.task.lifecycle.SyncScheduler;
 import oasis.artemis.task.physics.*;
 import oasis.artemis.ui.listener.ExitOnCloseListener;
 import oasis.artemis.ui.window.UIWindow;
+import oasis.artemis.util.math.Matrix;
+import oasis.artemis.util.math.Quaternion;
+import oasis.artemis.util.math.Vector;
 
 import javax.annotation.Nonnull;
 
@@ -68,6 +72,8 @@ public final class Artemis {
         window.addWindowListener(new ExitOnCloseListener()); // Use this instead of setting behavior to EXIT_ON_CLOSE
         window.setVisible(true);
 
+        final Matrix m = new Matrix(10, 10, 100);
+        m.forEach(System.out::println);
 
         /////////////////////////////////////////////////
         ////////////// START OF DEBUG CODE //////////////
@@ -104,6 +110,7 @@ public final class Artemis {
 
     /**
      * Gets the asynchronous scheduler.
+     *
      * @return {@link Scheduler}
      */
     @Nonnull
@@ -113,6 +120,7 @@ public final class Artemis {
 
     /**
      * Gets the event manager.
+     *
      * @return {@link EventManager}
      */
     @Nonnull
@@ -122,6 +130,7 @@ public final class Artemis {
 
     /**
      * Gets the level manager.
+     *
      * @return {@link LevelManager}
      */
     @Nonnull
@@ -129,13 +138,24 @@ public final class Artemis {
         return levelManager;
     }
 
+    /**
+     * Gets the session manager.
+     *
+     * @return {@link SessionManager}
+     */
+    @Nonnull
+    public static SessionManager getSessionManager() {
+        return sessionManager;
+    }
+
     //
     // Modules
     //
     private static final Scheduler syncScheduler = new SyncScheduler();
-    private static final AsyncScheduler asyncScheduler=  new AsyncScheduler();
+    private static final Scheduler asyncScheduler = new AsyncScheduler();
     private static final EventManager eventManager = new EventManager();
     private static final LevelManager levelManager = new LevelManager();
+    private static final SessionManager sessionManager = new SessionManager();
 
     //
     // UI getters
@@ -143,6 +163,7 @@ public final class Artemis {
 
     /**
      * Gets the main window of Artemis.
+     *
      * @return Main window
      */
     @Nonnull

@@ -46,6 +46,7 @@ public interface Level {
 
     /**
      * Gets a set of overlapping objects.
+     *
      * @return Set of overlapping objects
      */
     @Nonnull
