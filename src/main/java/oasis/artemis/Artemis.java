@@ -3,6 +3,7 @@ package oasis.artemis;
 import oasis.artemis.event.lifecycle.EventManager;
 import oasis.artemis.level.lifecycle.LevelManager;
 import oasis.artemis.network.SessionManager;
+import oasis.artemis.task.TaskAdapter;
 import oasis.artemis.task.lifecycle.AsyncScheduler;
 import oasis.artemis.task.lifecycle.Scheduler;
 import oasis.artemis.task.lifecycle.SyncScheduler;
@@ -12,6 +13,7 @@ import oasis.artemis.ui.window.UIWindow;
 import oasis.artemis.util.math.Matrix;
 import oasis.artemis.util.math.Quaternion;
 import oasis.artemis.util.math.Vector;
+import org.joda.time.Duration;
 
 import javax.annotation.Nonnull;
 
@@ -72,12 +74,21 @@ public final class Artemis {
         window.addWindowListener(new ExitOnCloseListener()); // Use this instead of setting behavior to EXIT_ON_CLOSE
         window.setVisible(true);
 
-        final Matrix m = new Matrix(10, 10, 100);
-        m.forEach(System.out::println);
-
         /////////////////////////////////////////////////
         ////////////// START OF DEBUG CODE //////////////
         /////////////////////////////////////////////////
+
+        Vector v = new Vector(0, 0, 10);
+        final Quaternion rq = Quaternion.fromAxisAngle(Vector.POSITIVE_Y, Math.toRadians(90)).scale(0.01);
+
+        for (int i = 0; i < 100; i++) {
+            v = v.rotate(rq);
+        }
+
+        System.out.println(v);
+
+
+        final boolean FALSE = false; // Put breakpoint here for easy debugging
 
         /////////////////////////////////////////////////
         //////////////// END OF DEBUG CODE //////////////
