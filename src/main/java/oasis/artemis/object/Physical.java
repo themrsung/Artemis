@@ -53,6 +53,7 @@ public interface Physical extends ArtemisObject {
 
     /**
      * Gets the density of this object.
+     *
      * @return Density
      */
     @Nonnegative

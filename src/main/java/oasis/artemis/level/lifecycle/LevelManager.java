@@ -17,6 +17,7 @@ public final class LevelManager {
 
     /**
      * Gets a set of levels in this manager.
+     *
      * @return Set of levels
      */
     @Nonnull
@@ -26,6 +27,7 @@ public final class LevelManager {
 
     /**
      * Adds a level to this manager.
+     *
      * @param level Level to add
      */
     void addLevel(@Nonnull Level level) {
@@ -34,6 +36,7 @@ public final class LevelManager {
 
     /**
      * Removes a level from this manager.
+     *
      * @param level Level to remove
      */
     void removeLevel(@Nonnull Level level) {

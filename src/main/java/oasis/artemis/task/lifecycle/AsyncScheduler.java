@@ -10,8 +10,8 @@ import java.util.List;
 /**
  * <h2>AsyncScheduler</h2>
  * <p>
- *     An asynchronous scheduler.
- *     Tasks are not guaranteed to be executed in sequence.
+ * An asynchronous scheduler.
+ * Tasks are not guaranteed to be executed in sequence.
  * </p>
  */
 public final class AsyncScheduler implements Scheduler {
