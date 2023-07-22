@@ -2,4 +2,6 @@
 
 The game engine you'll miss.
 
-See the wiki for more information.
+All information regarding this engine can be found in the official wiki.
+
+### [Wiki](https://github.com/themrsung/Artemis/wiki)
