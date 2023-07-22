@@ -266,6 +266,23 @@ public class Quaternion implements Comparable<Quaternion>, Serializable {
     }
 
     /**
+     * Scales a rotation quaternion by given scalar.
+     * This effectively scales the rotation by a modifier.
+     *
+     * @param s Scalar to scale to
+     * @return Scaled quaternion
+     */
+    @Nonnull
+    public Quaternion scale(@Numeric double s) {
+        // This is a simplified equation of converting this to axis/angle, scaling the angle, then converting it back
+        final double acos = Math.acos(w);
+        return new Quaternion(
+                Math.cos(acos * s),
+                getVectorPart().divide(Math.sin(acos)).multiply(Math.sin(acos * s))
+        );
+    }
+
+    /**
      * Performs quaternion-scalar division.
      *
      * @param s Scalar to use as denominator
