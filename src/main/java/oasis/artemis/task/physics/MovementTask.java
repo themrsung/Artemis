@@ -16,7 +16,7 @@ public final class MovementTask extends TaskAdapter {
     public void execute(@Nonnull Duration delta) {
         Artemis.getLevelManager().getLevels().forEach(l -> l.getObjects().stream()
                 .filter(Physical.class::isInstance)
-                .map(Physical.class::cast).toList()
+                .map(Physical.class::cast)
                 .forEach(o -> o.move(o.getAcceleration().multiply((double) delta.getMillis() / 1000))));
     }
 }

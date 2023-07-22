@@ -12,6 +12,7 @@ import oasis.artemis.ui.listener.ExitOnCloseListener;
 import oasis.artemis.ui.window.UIWindow;
 import oasis.artemis.util.math.Matrix;
 import oasis.artemis.util.math.Quaternion;
+import oasis.artemis.util.math.RotationBuilder;
 import oasis.artemis.util.math.Vector;
 import org.joda.time.Duration;
 
@@ -78,15 +79,10 @@ public final class Artemis {
         ////////////// START OF DEBUG CODE //////////////
         /////////////////////////////////////////////////
 
-        Vector v = new Vector(0, 0, 10);
-        final Quaternion rq = Quaternion.fromAxisAngle(Vector.POSITIVE_Y, Math.toRadians(90)).scale(0.01);
+        Vector v = new Vector(10, 0, 10);
+        final Vector p = v.rotate(RotationBuilder.fromRollDegrees(90).build());
 
-        for (int i = 0; i < 100; i++) {
-            v = v.rotate(rq);
-        }
-
-        System.out.println(v);
-
+        System.out.println(p);
 
         final boolean FALSE = false; // Put breakpoint here for easy debugging
 
