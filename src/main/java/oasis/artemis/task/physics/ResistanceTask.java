@@ -22,7 +22,7 @@ public final class ResistanceTask extends TaskAdapter {
             final Set<Pair<ArtemisObject>> overlaps = l.getOverlappingObjects();
             l.getObjects().stream()
                     .filter(Physical.class::isInstance)
-                    .map(Physical.class::cast).toList()
+                    .map(Physical.class::cast)
                     .forEach(p -> p.decelerate(Physics.dragForce(p, l.getPhysicsContext(p))));
         });
     }

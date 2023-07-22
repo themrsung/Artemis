@@ -20,7 +20,7 @@ public final class GravityTask extends TaskAdapter {
 
             l.getObjects().stream()
                     .filter(Physical.class::isInstance)
-                    .map(Physical.class::cast).toList()
+                    .map(Physical.class::cast)
                     .forEach(o -> o.setAcceleration(o.getAcceleration().add(gravity)));
         });
     }
