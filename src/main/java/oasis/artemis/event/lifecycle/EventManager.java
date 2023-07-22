@@ -24,8 +24,9 @@ public final class EventManager {
 
     /**
      * Calls an event to be handled.
+     *
      * @param event Event to call
-     * @param <E> Type of event
+     * @param <E>   Type of event
      */
     public <E extends Event> void callEvent(@Nonnull E event) {
         eventQueue.add(event);
@@ -33,6 +34,7 @@ public final class EventManager {
 
     /**
      * Registers a listener.
+     *
      * @param listener Listener to register
      */
     public void registerListener(@Nonnull Listener listener) {
@@ -41,6 +43,7 @@ public final class EventManager {
 
     /**
      * Registers multiple listeners.
+     *
      * @param listeners Listeners to register
      */
     public void registerListeners(@Nonnull Listener... listeners) {
@@ -49,6 +52,7 @@ public final class EventManager {
 
     /**
      * Registers multiple listeners.
+     *
      * @param listeners List of listeners to register
      */
     public void registerListeners(@Nonnull List<Listener> listeners) {
@@ -57,6 +61,7 @@ public final class EventManager {
 
     /**
      * Unregisters a listener.
+     *
      * @param listener Listener to unregister
      */
     public void unregisterListener(@Nonnull Listener listener) {
@@ -65,6 +70,7 @@ public final class EventManager {
 
     /**
      * Unregisters multiple listeners.
+     *
      * @param listeners Listeners to unregister
      */
     public void unregisterListeners(@Nonnull Listener... listeners) {
@@ -73,6 +79,7 @@ public final class EventManager {
 
     /**
      * Unregisters multiple listeners.
+     *
      * @param listeners List of listeners to unregister
      */
     public void unregisterListeners(@Nonnull List<Listener> listeners) {

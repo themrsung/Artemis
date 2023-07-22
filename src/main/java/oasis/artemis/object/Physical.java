@@ -29,6 +29,7 @@ public interface Physical extends ArtemisObject {
 
     /**
      * Gets the velocity of this object.
+     *
      * @return Velocity
      */
     @Nonnegative
@@ -52,6 +53,7 @@ public interface Physical extends ArtemisObject {
 
     /**
      * Gets the current drag coefficient of this object.
+     *
      * @return Coefficient of drag
      */
     @Nonnegative
@@ -60,6 +62,7 @@ public interface Physical extends ArtemisObject {
     /**
      * Gets the current cross-section of this object
      * when viewed from an opposing vector of this object's acceleration.
+     *
      * @return Cross-section
      */
     @Nonnegative
@@ -96,8 +99,9 @@ public interface Physical extends ArtemisObject {
 
     /**
      * Accelerates this object.
+     *
      * @param direction Direction to apply acceleration
-     * @param force Force of acceleration
+     * @param force     Force of acceleration
      */
     void accelerate(@Nonnull Vector direction, @Numeric double force);
 

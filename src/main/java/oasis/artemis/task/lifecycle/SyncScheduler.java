@@ -5,8 +5,8 @@ import javax.annotation.Nonnull;
 /**
  * <h2>SyncScheduler</h2>
  * <p>
- *     A perfectly synchronous scheduler.
- *     Tasks are guaranteed to be executed in sequence.
+ * A perfectly synchronous scheduler.
+ * Tasks are guaranteed to be executed in sequence.
  * </p>
  */
 public final class SyncScheduler extends AbstractScheduler {

@@ -16,12 +16,14 @@ public interface Task {
 
     /**
      * Executes this task.
+     *
      * @param delta The duration it took between the last execution and now
      */
     void execute(@Nonnull Duration delta);
 
     /**
      * Gets the interval of this task the scheduler should respect.
+     *
      * @return Interval of this task
      */
     @Nonnull
@@ -33,12 +35,14 @@ public interface Task {
 
     /**
      * Called upon registration to a scheduler.
+     *
      * @param scheduler Scheduler this task was registered to
      */
     void onRegistered(@Nonnull Scheduler scheduler);
 
     /**
      * Called upon unregistration from a scheduler.
+     *
      * @param scheduler Scheduler this task was unregistered from
      */
     void onUnregistered(@Nonnull Scheduler scheduler);

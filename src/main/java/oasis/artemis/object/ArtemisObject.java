@@ -106,7 +106,8 @@ public interface ArtemisObject {
 
     /**
      * Rotates this object.
-     * @param axis Axis of rotation
+     *
+     * @param axis  Axis of rotation
      * @param angle Angle of rotation
      */
     void rotate(@Nonnull Vector axis, @Numeric double angle);

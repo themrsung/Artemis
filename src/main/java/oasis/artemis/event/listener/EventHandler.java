@@ -16,6 +16,7 @@ public @interface EventHandler {
     /**
      * Gets the priority of this handler.
      * Defaults to {@link HandlerPriority#NORMAL}.
+     *
      * @return {@link HandlerPriority}
      */
     @Nonnull

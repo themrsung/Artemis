@@ -10,7 +10,7 @@ import javax.annotation.concurrent.Immutable;
 /**
  * <h2>PhysicsContext</h2>
  * <p>
- *     Contains contextual information required when performing physics tasks.
+ * Contains contextual information required when performing physics tasks.
  * </p>
  */
 @Immutable
@@ -29,8 +29,9 @@ public final class PhysicsContext {
 
     /**
      * Creates a new physics context.
-     * @param gravity Gravity vector
-     * @param fluidDensity Fluid density
+     *
+     * @param gravity          Gravity vector
+     * @param fluidDensity     Fluid density
      * @param heightFromGround Height from ground
      */
     public PhysicsContext(@Nonnull Vector gravity, @Nonnegative double fluidDensity, @Numeric double heightFromGround) {
@@ -56,6 +57,7 @@ public final class PhysicsContext {
 
     /**
      * Gets the gravity vector.
+     *
      * @return Gravity
      */
     @Nonnull
@@ -66,6 +68,7 @@ public final class PhysicsContext {
     /**
      * Gets the gravitational acceleration.
      * This is equal to the magnitude of {@link PhysicsContext#gravity}.
+     *
      * @return Gravity
      */
     @Nonnegative
@@ -75,6 +78,7 @@ public final class PhysicsContext {
 
     /**
      * Gets the fluid density.
+     *
      * @return Density of fluid
      */
     @Nonnegative
@@ -84,6 +88,7 @@ public final class PhysicsContext {
 
     /**
      * Gets the height from ground.
+     *
      * @return Height from ground
      */
     @Numeric

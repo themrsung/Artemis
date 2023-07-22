@@ -44,6 +44,7 @@ public interface Solid {
 
     /**
      * Gets the coefficient of drag.
+     *
      * @param angle Angle the drag force will be applied to
      * @return Coefficient of drag
      */
@@ -52,6 +53,7 @@ public interface Solid {
 
     /**
      * Gets the cross-section when viewed from given angle.
+     *
      * @param angle Angle to view this solid from
      * @return Cross-section
      */

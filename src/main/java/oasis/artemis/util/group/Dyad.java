@@ -6,6 +6,7 @@ import javax.annotation.concurrent.Immutable;
 /**
  * <h2>Dyad</h2>
  * <p>A dyad is a container class which holds two entries of different types.</p>
+ *
  * @param <A> Type of entry A
  * @param <B> Type of entry B
  */
@@ -17,6 +18,7 @@ public class Dyad<A, B> {
 
     /**
      * Creates a new dyad.
+     *
      * @param a Element A
      * @param b Element B
      */
@@ -40,6 +42,7 @@ public class Dyad<A, B> {
 
     /**
      * Gets the element A of this dyad.
+     *
      * @return A
      */
     @Nonnull
@@ -49,6 +52,7 @@ public class Dyad<A, B> {
 
     /**
      * Gets the element B of this dyad.
+     *
      * @return B
      */
     @Nonnull
@@ -62,6 +66,7 @@ public class Dyad<A, B> {
 
     /**
      * Checks for equality between two dyads.
+     *
      * @param other Dyad to compare to
      * @return {@code true} if the elements are equal
      */
@@ -75,9 +80,10 @@ public class Dyad<A, B> {
 
     /**
      * Checks if this dyad contains given element.
+     *
      * @param element Element to check
+     * @param <C>     Type of element
      * @return {@code true} if this dyad contains given element
-     * @param <C> Type of element
      */
     public <C> boolean contains(@Nonnull C element) {
         boolean contains = false;
@@ -95,6 +101,7 @@ public class Dyad<A, B> {
 
     /**
      * Flips this dyad around.
+     *
      * @return Flipped dyad
      */
     @Nonnull

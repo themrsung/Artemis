@@ -15,6 +15,7 @@ import javax.annotation.Nonnull;
 public final class Artemis {
     /**
      * Main method.
+     *
      * @param args Arguments
      */
     public static void main(@Nonnull String[] args) {
@@ -53,6 +54,7 @@ public final class Artemis {
 
     /**
      * Gets the synchronous scheduler.
+     *
      * @return {@link Scheduler}
      */
     @Nonnull
