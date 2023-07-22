@@ -14,6 +14,7 @@ import oasis.artemis.util.math.Matrix;
 import oasis.artemis.util.math.Quaternion;
 import oasis.artemis.util.math.RotationBuilder;
 import oasis.artemis.util.math.Vector;
+import org.joda.time.DateTime;
 import org.joda.time.Duration;
 
 import javax.annotation.Nonnull;
@@ -83,6 +84,8 @@ public final class Artemis {
         final Vector p = v.rotate(RotationBuilder.fromRollDegrees(90).build());
 
         System.out.println(p);
+
+        System.out.println(DateTime.now());
 
         final boolean FALSE = false; // Put breakpoint here for easy debugging
 
