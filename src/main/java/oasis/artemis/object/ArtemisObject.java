@@ -16,7 +16,6 @@ import java.util.UUID;
  * </p>
  */
 public interface ArtemisObject {
-
     //
     // Getters
     //

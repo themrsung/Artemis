@@ -1,10 +1,13 @@
 package oasis.artemis;
 
-import oasis.artemis.event.DummyEvent;
 import oasis.artemis.event.lifecycle.EventManager;
-import oasis.artemis.listener.DummyListener;
+import oasis.artemis.level.lifecycle.LevelManager;
+import oasis.artemis.task.lifecycle.AsyncScheduler;
 import oasis.artemis.task.lifecycle.Scheduler;
 import oasis.artemis.task.lifecycle.SyncScheduler;
+import oasis.artemis.task.physics.*;
+import oasis.artemis.ui.listener.ExitOnCloseListener;
+import oasis.artemis.ui.window.UIWindow;
 
 import javax.annotation.Nonnull;
 
@@ -13,6 +16,24 @@ import javax.annotation.Nonnull;
  * <p>Main class of Artemis.</p>
  */
 public final class Artemis {
+    //
+    // Constants
+    //
+
+    /**
+     * The title of your game.
+     */
+    public static final String GAME_TITLE = "ArtemisEngine";
+
+    /**
+     * The version of your game.
+     */
+    public static final String GAME_VERSION = "1.0";
+
+    //
+    // Public methods
+    //
+
     /**
      * Main method.
      *
@@ -26,17 +47,31 @@ public final class Artemis {
      * Starts the engine.
      */
     public static void start() {
+        // Register first party tasks
+        getSyncScheduler().registerTasks(
+                new CheckOverlapTask(),
+                new GravityTask(),
+                new MovementTask(),
+                new ResistanceTask(),
+                new RotationTask()
+        );
+
+        // Start the event manager
         eventManager.start();
 
-        // This should be called last
+        // Start schedulers
         syncScheduler.start();
+        asyncScheduler.start();
+
+        // Open window
+        window.setSize(1920, 1080);
+        window.addWindowListener(new ExitOnCloseListener()); // Use this instead of setting behavior to EXIT_ON_CLOSE
+        window.setVisible(true);
+
 
         /////////////////////////////////////////////////
         ////////////// START OF DEBUG CODE //////////////
         /////////////////////////////////////////////////
-
-        eventManager.registerListener(new DummyListener());
-        eventManager.callEvent(new DummyEvent());
 
         /////////////////////////////////////////////////
         //////////////// END OF DEBUG CODE //////////////
@@ -48,9 +83,14 @@ public final class Artemis {
      * Stops the engine.
      */
     public static void stop() {
-        // This stops all first-party modules
+        // Stop schedulers
         syncScheduler.stop();
+        asyncScheduler.stop();
     }
+
+    //
+    // Module instance getters
+    //
 
     /**
      * Gets the synchronous scheduler.
@@ -62,9 +102,56 @@ public final class Artemis {
         return syncScheduler;
     }
 
+    /**
+     * Gets the asynchronous scheduler.
+     * @return {@link Scheduler}
+     */
+    @Nonnull
+    public static Scheduler getAsyncScheduler() {
+        return asyncScheduler;
+    }
+
+    /**
+     * Gets the event manager.
+     * @return {@link EventManager}
+     */
+    @Nonnull
+    public static EventManager getEventManager() {
+        return eventManager;
+    }
+
+    /**
+     * Gets the level manager.
+     * @return {@link LevelManager}
+     */
+    @Nonnull
+    public static LevelManager getLevelManager() {
+        return levelManager;
+    }
+
     //
     // Modules
     //
     private static final Scheduler syncScheduler = new SyncScheduler();
+    private static final AsyncScheduler asyncScheduler=  new AsyncScheduler();
     private static final EventManager eventManager = new EventManager();
+    private static final LevelManager levelManager = new LevelManager();
+
+    //
+    // UI getters
+    //
+
+    /**
+     * Gets the main window of Artemis.
+     * @return Main window
+     */
+    @Nonnull
+    public static UIWindow getWindow() {
+        return window;
+    }
+
+    //
+    // UI
+    //
+    private static final UIWindow window = new UIWindow(GAME_TITLE + " " + GAME_VERSION);
 }

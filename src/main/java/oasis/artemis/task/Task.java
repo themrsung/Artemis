@@ -35,6 +35,10 @@ public interface Task {
 
     /**
      * Called upon registration to a scheduler.
+     * <i>
+     * Note that {@code scheduler} will always be a synchronous scheduler,
+     * as asynchronous schedulers are implemented by using multiple synchronous schedulers.
+     * </i>
      *
      * @param scheduler Scheduler this task was registered to
      */

@@ -15,7 +15,10 @@ import java.util.*;
 
 /**
  * <h2>EventManager</h2>
- * <p>Handles the lifecycle of events.</p>
+ * <p>
+ * Handles the lifecycle of events.
+ * Special thanks to Wouter Kistemaker for the event manager design.
+ * </p>
  */
 public final class EventManager {
     //
@@ -94,14 +97,14 @@ public final class EventManager {
      * Starts the event manager.
      */
     public void start() {
-        Artemis.getSyncScheduler().registerTask(task);
+        Artemis.getAsyncScheduler().registerTask(task);
     }
 
     /**
      * Stops the event manager.
      */
     public void stop() {
-        Artemis.getSyncScheduler().unregisterTask(task);
+        Artemis.getAsyncScheduler().unregisterTask(task);
     }
 
     //

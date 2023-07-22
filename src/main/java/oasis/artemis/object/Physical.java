@@ -52,6 +52,13 @@ public interface Physical extends ArtemisObject {
     double getMass();
 
     /**
+     * Gets the density of this object.
+     * @return Density
+     */
+    @Nonnegative
+    double getDensity();
+
+    /**
      * Gets the current drag coefficient of this object.
      *
      * @return Coefficient of drag

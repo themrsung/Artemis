@@ -119,6 +119,21 @@ public class Pair<T> implements Iterable<T> {
     //
 
     /**
+     * Gets the other element when given one element.
+     *
+     * @param element Element to check
+     * @return The other element
+     * @throws IllegalArgumentException When the given element is not in this pair
+     */
+    @Nonnull
+    public T other(@Nonnull T element) throws IllegalArgumentException {
+        if (first.equals(element)) return second;
+        if (second.equals(element)) return first;
+
+        throw new IllegalArgumentException("Given element is not a member of this pair.");
+    }
+
+    /**
      * Gets the iterator of this pair.
      *
      * @return Iterator of pair
