@@ -10,9 +10,7 @@ import org.joda.time.Duration;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 public abstract class AbstractLevel implements Level {
@@ -36,7 +34,7 @@ public abstract class AbstractLevel implements Level {
             @Nonnull Set<ArtemisObject> objects,
             @Nonnull Vector gravity,
             @Nonnegative double airDensity,
-            @Nonnull Set<Pair<ArtemisObject>> overlappingObjects
+            @Nonnull List<Pair<ArtemisObject>> overlappingObjects
     ) {
         this.uniqueId = uniqueId;
         this.name = name;
@@ -58,7 +56,7 @@ public abstract class AbstractLevel implements Level {
                 builder.objects,
                 builder.gravity,
                 builder.airDensity,
-                new HashSet<>()
+                new ArrayList<>()
         );
     }
 
@@ -186,18 +184,18 @@ public abstract class AbstractLevel implements Level {
         objects.forEach(o -> o.tick(delta));
 
         // Handle collisions
-        final Set<Pair<ArtemisObject>> pairs = Pair.pairsOfSet(objects);
-        pairs.forEach(pair -> {
-            final ArtemisObject o1 = pair.getFirst();
-            final ArtemisObject o2 = pair.getSecond();
+        objects.forEach(o1 -> {
+            objects.stream().filter(o -> !o.equals(o1)).forEach(o2 -> {
+                final Pair<ArtemisObject> pair = new Pair<>(o1, o2);
+                if (o1.overlaps(o2)) {
+                    if (overlappingObjects.contains(pair)) return;
 
-            if (o1.overlaps(o2)) {
-                if (overlappingObjects.add(pair)) {
+                    overlappingObjects.add(pair);
                     Artemis.getEventManager().callEvent(new CollisionEvent(pair));
+                } else {
+                    overlappingObjects.remove(pair);
                 }
-            } else {
-                overlappingObjects.remove(pair);
-            }
+            });
         });
 
         // Apply fluid resistance
@@ -219,8 +217,8 @@ public abstract class AbstractLevel implements Level {
             final double kineticEnergy = 0.5 * o.getMass() * o.getVelocity();
             if (kineticEnergy == 0) return;
 
-            final double decelerationRatio = Math.max(Math.min(1, 1 - (dragForce / kineticEnergy)), 0);
-//            o.setAcceleration(o.getAcceleration().multiply(decelerationRatio));
+            final double decelerationRatio = Math.max(Math.min(1, 1 - ((dragForce * seconds) / kineticEnergy)), 0);
+            o.setAcceleration(o.getAcceleration().multiply(decelerationRatio));
         });
     }
 
@@ -243,7 +241,7 @@ public abstract class AbstractLevel implements Level {
     //
 
     @Nonnull
-    protected final Set<Pair<ArtemisObject>> overlappingObjects;
+    protected final List<Pair<ArtemisObject>> overlappingObjects;
 
     //
     // Getters

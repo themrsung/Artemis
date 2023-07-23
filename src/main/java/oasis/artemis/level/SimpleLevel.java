@@ -7,6 +7,7 @@ import oasis.artemis.util.math.Vector;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -45,7 +46,7 @@ public class SimpleLevel extends AbstractLevel {
             @Nonnull Set<ArtemisObject> objects,
             @Nonnull Vector gravity,
             @Nonnegative double airDensity,
-            @Nonnull Set<Pair<ArtemisObject>> overlappingObjects
+            @Nonnull List<Pair<ArtemisObject>> overlappingObjects
     ) {
         super(uniqueId, name, objects, gravity, airDensity, overlappingObjects);
     }
