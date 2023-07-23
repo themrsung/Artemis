@@ -19,6 +19,7 @@ public class SimpleObject extends AbstractObject {
 
     /**
      * Gets a new builder instance.
+     *
      * @return {@link Builder}
      */
     @Nonnull
@@ -29,12 +30,12 @@ public class SimpleObject extends AbstractObject {
     /**
      * All-args constructor.
      *
-     * @param uniqueId Unique identifier of this object
-     * @param mass Mass of this object
-     * @param geometry Geometric profile of this object
-     * @param location Location of this object
+     * @param uniqueId     Unique identifier of this object
+     * @param mass         Mass of this object
+     * @param geometry     Geometric profile of this object
+     * @param location     Location of this object
      * @param acceleration Acceleration of this object
-     * @param rotation Rotation of this object
+     * @param rotation     Rotation of this object
      * @param rotationRate Rate of rotation of this object
      */
     public SimpleObject(
@@ -51,6 +52,7 @@ public class SimpleObject extends AbstractObject {
 
     /**
      * Builder constructor.
+     *
      * @param builder Builder to use
      */
     protected SimpleObject(@Nonnull Builder builder) {
