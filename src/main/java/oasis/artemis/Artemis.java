@@ -9,6 +9,8 @@ import oasis.artemis.event.lifecycle.EventManager;
 import oasis.artemis.level.lifecycle.LevelManager;
 import oasis.artemis.listener.physics.CollisionListener;
 import oasis.artemis.object.DummyObject;
+import oasis.artemis.plugin.debug.DebugPlugin;
+import oasis.artemis.plugin.lifecycle.PluginManager;
 import oasis.artemis.session.SessionManager;
 import oasis.artemis.session.player.LocalPlayer;
 import oasis.artemis.task.lifecycle.AsyncScheduler;
@@ -43,7 +45,7 @@ public final class Artemis {
     /**
      * The type of this Artemis instance.
      */
-    public static final InstanceType INSTANCE_TYPE = InstanceType.SERVER;
+    public static final InstanceType INSTANCE_TYPE = InstanceType.CLIENT;
 
     //
     // Public methods
@@ -64,6 +66,9 @@ public final class Artemis {
     public static void start() {
         // Load data
         load();
+
+        // Notify plugins
+        pluginManager.onEngineStarting();
 
         // Register listeners
         eventManager.registerListeners(
@@ -109,18 +114,23 @@ public final class Artemis {
         ////////////// START OF DEBUG CODE //////////////
         /////////////////////////////////////////////////
 
-        final boolean FALSE = false; // Put breakpoint here for easy debugging
+        pluginManager.registerPlugin(new DebugPlugin());
 
         /////////////////////////////////////////////////
         //////////////// END OF DEBUG CODE //////////////
         /////////////////////////////////////////////////
 
+        // Notify plugins
+        pluginManager.onEngineStarted();
     }
 
     /**
      * Stops the engine.
      */
     public static void stop() {
+        // Notify plugins
+        pluginManager.onEngineStopping();
+
         // Dispose window
         window.removeAll();
         window.dispose();
@@ -136,6 +146,9 @@ public final class Artemis {
 
         // Save data
         save();
+
+        // Notify plugins
+        pluginManager.onEngineStopped();
     }
 
     /**
@@ -278,6 +291,16 @@ public final class Artemis {
         return commandManager;
     }
 
+    /**
+     * Gets the plugin manager.
+     *
+     * @return {@link PluginManager}
+     */
+    @Nonnull
+    public static PluginManager getPluginManager() {
+        return pluginManager;
+    }
+
     //
     // Modules
     //
@@ -287,6 +310,7 @@ public final class Artemis {
     private static final LevelManager levelManager = new LevelManager();
     private static final SessionManager sessionManager = new SessionManager();
     private static final CommandManager commandManager = new CommandManager();
+    private static final PluginManager pluginManager = new PluginManager();
 
     //
     // UI getters
