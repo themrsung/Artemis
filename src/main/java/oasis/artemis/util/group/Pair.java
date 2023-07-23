@@ -32,30 +32,6 @@ public class Pair<T> implements Iterable<T> {
     }
 
     //
-    // Static initializers
-    //
-
-    /**
-     * Gets a set of all pairs of given set.
-     *
-     * @param set Set to get pairs of
-     * @param <T> Type of element the set contains
-     * @return Set of pairs of given set
-     */
-    @Nonnull
-    public static <T> Set<Pair<T>> pairsOfSet(@Nonnull Set<T> set) {
-        final Set<Pair<T>> pairs = new HashSet<>();
-        set.forEach(e1 -> set.stream().filter(e -> !e.equals(e1)).forEach(e2 -> {
-            final Pair<T> pair = new Pair<>(e1, e2);
-            if (pairs.contains(pair)) return;
-
-            pairs.add(new Pair<>(e1, e2));
-        }));
-
-        return pairs;
-    }
-
-    //
     // Variables
     //
 

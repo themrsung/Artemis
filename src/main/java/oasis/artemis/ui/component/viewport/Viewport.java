@@ -57,9 +57,9 @@ public class Viewport extends UIComponent {
             solid.getVertices().forEach(v -> vertices.add(v.transform(origin, angle).inflate(50)));
         });
 
-        repaint();
-
         this.context = context;
+
+        repaint();
     }
 
     /**
