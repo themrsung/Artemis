@@ -40,7 +40,7 @@ public class SessionManager {
             if (player.getUniqueId().equals(uniqueId)) return player;
         }
 
-        throw new NullPointerException();
+        throw new NullPointerException("Player of given UUID does not exist.");
     }
 
     /**
