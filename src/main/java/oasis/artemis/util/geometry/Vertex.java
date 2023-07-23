@@ -111,6 +111,7 @@ public class Vertex implements Iterable<Vector> {
 
     /**
      * Gets the iterator of the three vectors of this vertex.
+     *
      * @return Iterator
      */
     @Override
@@ -121,6 +122,7 @@ public class Vertex implements Iterable<Vector> {
 
     /**
      * Inflates this vertex to better represents its size.
+     *
      * @param scale Scale to inflate by
      * @return Inflated vertex
      */
