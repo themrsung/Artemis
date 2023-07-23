@@ -35,6 +35,6 @@ public final class StartScreen extends UIComponent {
     private void paintTitle(@Nonnull Graphics g) {
         g.translate(getWidth() / 2, getHeight() / 2);
         g.setColor(Color.WHITE);
-        g.drawString(Artemis.GAME_TITLE, 0, -100);
+        g.drawString(Artemis.GAME_TITLE, 0, -250);
     }
 }

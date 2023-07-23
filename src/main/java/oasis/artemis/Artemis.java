@@ -6,6 +6,8 @@ import oasis.artemis.command.game.list.ListCommand;
 import oasis.artemis.command.game.stop.StopCommand;
 import oasis.artemis.command.lifecycle.CommandManager;
 import oasis.artemis.event.lifecycle.EventManager;
+import oasis.artemis.level.Level;
+import oasis.artemis.level.SimpleLevel;
 import oasis.artemis.level.lifecycle.LevelManager;
 import oasis.artemis.listener.physics.CollisionListener;
 import oasis.artemis.object.DummyObject;
@@ -19,6 +21,7 @@ import oasis.artemis.task.lifecycle.SyncScheduler;
 import oasis.artemis.ui.component.start.StartScreen;
 import oasis.artemis.ui.listener.ExitOnCloseListener;
 import oasis.artemis.ui.window.UIWindow;
+import oasis.artemis.util.math.Vector;
 
 import javax.annotation.Nonnull;
 import java.util.UUID;
@@ -84,6 +87,9 @@ public final class Artemis {
         syncScheduler.start();
         asyncScheduler.start();
 
+        // Initialize levels
+        initializeLevels();
+
         switch (INSTANCE_TYPE) {
             // Client setup
             case CLIENT -> {
@@ -99,9 +105,6 @@ public final class Artemis {
 
             // Server setup
             case SERVER -> {
-                // Initialize levels
-                initializeLevels();
-
                 // Open network
                 openNetwork();
             }
@@ -132,7 +135,6 @@ public final class Artemis {
         pluginManager.onEngineStopping();
 
         // Dispose window
-        window.removeAll();
         window.dispose();
 
         // Stop modules
@@ -208,7 +210,11 @@ public final class Artemis {
      * Initializes levels.
      */
     private static void initializeLevels() {
-
+        levelManager.addLevel(SimpleLevel.builder()
+                .gravity(Level.EARTH_GRAVITY)
+                .airDensity(Level.EARTH_AIR_DENSITY)
+                .name("ArtemisWorld")
+                .build());
     }
 
     /**

@@ -59,6 +59,9 @@ public class Viewport extends UIComponent {
 
         this.context = context;
 
+        vertices.sort((v1, v2) ->
+                Double.compare(v2.getCentroid().distanceTo(origin), v1.getCentroid().distanceTo(origin)));
+
         repaint();
     }
 
