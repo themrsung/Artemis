@@ -1,5 +1,6 @@
 package oasis.artemis.session.player;
 
+import oasis.artemis.command.CommandSender;
 import oasis.artemis.object.ArtemisObject;
 import oasis.artemis.util.math.Quaternion;
 import oasis.artemis.util.math.Vector;
@@ -12,7 +13,7 @@ import java.util.UUID;
  * <h2>Player</h2>
  * <p>Represents an in-game player.</p>
  */
-public interface Player {
+public interface Player extends CommandSender {
     //
     // Identification
     //
