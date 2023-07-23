@@ -16,6 +16,7 @@ import javax.annotation.concurrent.Immutable;
 public class SphereProfile implements GeometricProfile {
     /**
      * Creates a new spherical profile.
+     *
      * @param radius Radius of this sphere
      */
     public SphereProfile(double radius) {
@@ -27,6 +28,7 @@ public class SphereProfile implements GeometricProfile {
 
     /**
      * Gets the radius of this spherical profile.
+     *
      * @return Radius
      */
     @Nonnegative

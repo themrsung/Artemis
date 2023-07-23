@@ -1,6 +1,5 @@
 package oasis.artemis.object;
 
-import oasis.artemis.annotation.Numeric;
 import oasis.artemis.util.geometry.profile.GeometricProfile;
 import oasis.artemis.util.geometry.solid.Solid;
 import oasis.artemis.util.math.Quaternion;
@@ -61,6 +60,7 @@ public interface ArtemisObject {
 
     /**
      * Gets the current coefficient of drag of this object.
+     *
      * @return Drag coefficient
      */
     @Nonnegative
@@ -68,6 +68,7 @@ public interface ArtemisObject {
 
     /**
      * Gets the current cross-section of this object.
+     *
      * @return Cross-section
      */
     @Nonnegative

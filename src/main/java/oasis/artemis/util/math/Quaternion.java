@@ -274,6 +274,9 @@ public class Quaternion implements Comparable<Quaternion>, Serializable {
      */
     @Nonnull
     public Quaternion scale(@Numeric double s) {
+        // No need to scale identity quaternions
+        if (w == 1) return IDENTITY_QUATERNION;
+
         // This is a simplified equation of converting this to axis/angle, scaling the angle, then converting it back
         final double acos = Math.acos(w);
         return new Quaternion(

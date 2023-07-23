@@ -3,10 +3,8 @@ package oasis.artemis.object;
 import oasis.artemis.util.geometry.profile.GeometricProfile;
 import oasis.artemis.util.geometry.profile.SphereProfile;
 import oasis.artemis.util.geometry.solid.Solid;
-import oasis.artemis.util.geometry.solid.Sphere;
 import oasis.artemis.util.math.Quaternion;
 import oasis.artemis.util.math.Vector;
-import oasis.artemis.util.physics.Physics;
 import org.joda.time.Duration;
 
 import javax.annotation.Nonnegative;

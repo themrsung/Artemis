@@ -12,14 +12,19 @@ import oasis.artemis.task.TaskAdapter;
 import oasis.artemis.task.lifecycle.AsyncScheduler;
 import oasis.artemis.task.lifecycle.Scheduler;
 import oasis.artemis.task.lifecycle.SyncScheduler;
+import oasis.artemis.ui.component.viewport.Viewport;
+import oasis.artemis.ui.component.viewport.ViewportRenderContext;
 import oasis.artemis.ui.listener.ExitOnCloseListener;
 import oasis.artemis.ui.window.UIWindow;
 import oasis.artemis.util.geometry.profile.SphereProfile;
+import oasis.artemis.util.math.Quaternion;
 import oasis.artemis.util.math.RotationBuilder;
 import oasis.artemis.util.math.Vector;
 import org.joda.time.Duration;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <h2>Artemis</h2>
@@ -87,24 +92,40 @@ public final class Artemis {
         levelManager.addLevel(level);
 
         final ArtemisObject object = SimpleObject.builder()
-                .geometry(new SphereProfile(1))
+                .geometry(new SphereProfile(10))
                 .location(new Vector(0, 0, 500))
                 .mass(100)
                 .acceleration(new Vector(0, 0, -60))
-                .rotationRate(RotationBuilder.fromYawDegrees(45).build())
+                .rotationRate(Quaternion.fromAxisAngle(new Vector(1, 2, 0.3), Math.toRadians(12)))
                 .build();
 
         level.addObject(object);
 
         final ArtemisObject object2 = SimpleObject.builder()
-                .geometry(new SphereProfile(1))
+                .geometry(new SphereProfile(10))
                 .location(new Vector(0, 0, -500))
                 .mass(100)
                 .acceleration(new Vector(0, 0, 60))
-                .rotationRate(RotationBuilder.fromYawDegrees(-45).build())
                 .build();
 
         level.addObject(object2);
+
+        final Viewport viewport = new Viewport();
+        window.add(viewport);
+        viewport.setSize(window.getSize());
+        viewport.setVisible(true);
+
+        getSyncScheduler().registerTask(new TaskAdapter() {
+            @Override
+            public void execute(@Nonnull Duration delta) {
+                viewport.render(new ViewportRenderContext(
+                        level,
+                        object2.getLocation(),
+                        object2.getRotation(),
+                        List.of(object2)
+                ));
+            }
+        });
 
 
         getAsyncScheduler().registerTask(new TaskAdapter() {

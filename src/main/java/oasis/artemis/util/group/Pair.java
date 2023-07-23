@@ -116,6 +116,7 @@ public class Pair<T> implements Iterable<T> {
         return (first.equals(other.first) && second.equals(other.second))
                 || (second.equals(other.first) && first.equals(other.second));
     }
+
     /**
      * Checks for equality without regards to the elements' order.
      *
