@@ -1,4 +1,4 @@
-package oasis.artemis.util;
+package oasis.artemis.util.math;
 
 import oasis.artemis.util.math.Matrix;
 import oasis.artemis.util.math.Quaternion;
