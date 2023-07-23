@@ -20,4 +20,9 @@ public class RemotePlayer extends AbstractPlayer {
     public RemotePlayer(@Nonnull UUID uniqueId, @Nonnull String name, @Nonnull ArtemisObject pawn) {
         super(uniqueId, name, pawn);
     }
+
+    @Override
+    public void sendMessage(@Nonnull String message) {
+        System.out.println(message);
+    }
 }

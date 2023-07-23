@@ -1,28 +1,24 @@
 package oasis.artemis;
 
+import oasis.artemis.command.CommandSender;
+import oasis.artemis.command.ConsoleCommandSender;
+import oasis.artemis.command.lifecycle.CommandManager;
+import oasis.artemis.command.server.stop.StopCommand;
 import oasis.artemis.event.lifecycle.EventManager;
-import oasis.artemis.level.Level;
-import oasis.artemis.level.SimpleLevel;
 import oasis.artemis.level.lifecycle.LevelManager;
 import oasis.artemis.listener.physics.CollisionListener;
-import oasis.artemis.object.ArtemisObject;
-import oasis.artemis.object.SimpleObject;
+import oasis.artemis.object.DummyObject;
 import oasis.artemis.session.SessionManager;
-import oasis.artemis.task.TaskAdapter;
+import oasis.artemis.session.player.LocalPlayer;
 import oasis.artemis.task.lifecycle.AsyncScheduler;
 import oasis.artemis.task.lifecycle.Scheduler;
 import oasis.artemis.task.lifecycle.SyncScheduler;
-import oasis.artemis.ui.component.viewport.Viewport;
-import oasis.artemis.ui.component.viewport.ViewportRenderContext;
+import oasis.artemis.ui.component.start.StartScreen;
 import oasis.artemis.ui.listener.ExitOnCloseListener;
 import oasis.artemis.ui.window.UIWindow;
-import oasis.artemis.util.geometry.profile.SphereProfile;
-import oasis.artemis.util.math.Quaternion;
-import oasis.artemis.util.math.Vector;
-import org.joda.time.Duration;
 
 import javax.annotation.Nonnull;
-import java.util.List;
+import java.util.UUID;
 
 /**
  * <h2>Artemis</h2>
@@ -43,6 +39,11 @@ public final class Artemis {
      */
     public static final String GAME_VERSION = "1.0";
 
+    /**
+     * The type of this Artemis instance.
+     */
+    public static final InstanceType INSTANCE_TYPE = InstanceType.CLIENT;
+
     //
     // Public methods
     //
@@ -60,6 +61,9 @@ public final class Artemis {
      * Starts the engine.
      */
     public static void start() {
+        // Load data
+        load();
+
         // Register listeners
         eventManager.registerListeners(
                 new CollisionListener()
@@ -68,77 +72,41 @@ public final class Artemis {
         // Start modules
         eventManager.start();
         levelManager.start();
+        commandManager.start();
 
         // Start schedulers
         syncScheduler.start();
         asyncScheduler.start();
 
-        // Open window
-        window.setSize(1920, 1080);
-        window.addWindowListener(new ExitOnCloseListener()); // Use this instead of setting behavior to EXIT_ON_CLOSE
-        window.setVisible(true);
+        switch (INSTANCE_TYPE) {
+            // Client setup
+            case CLIENT -> {
+                // Initialize local player
+                initializeLocalPlayer();
+
+                // Open window
+                openWindow();
+
+                // Show start screen
+                showStartScreen();
+            }
+
+            // Server setup
+            case SERVER -> {
+                // Initialize levels
+                initializeLevels();
+
+                // Open network
+                openNetwork();
+            }
+        }
+
+        // Register commands
+        registerCommands();
 
         /////////////////////////////////////////////////
         ////////////// START OF DEBUG CODE //////////////
         /////////////////////////////////////////////////
-
-        final Level level = SimpleLevel.builder()
-                .name("SimpleLevel")
-                .gravity(Level.EARTH_GRAVITY)
-                .build();
-
-        levelManager.addLevel(level);
-
-        final ArtemisObject object = SimpleObject.builder()
-                .geometry(new SphereProfile(10))
-                .location(new Vector(0, 0, 500))
-                .mass(100)
-                .acceleration(new Vector(0, 0, -60))
-                .rotationRate(Quaternion.fromAxisAngle(new Vector(1, 2, 0.3), Math.toRadians(12)))
-                .build();
-
-        level.addObject(object);
-
-        final ArtemisObject object2 = SimpleObject.builder()
-                .geometry(new SphereProfile(10))
-                .location(new Vector(0, 0, -500))
-                .mass(100)
-                .acceleration(new Vector(0, 0, 60))
-                .build();
-
-        level.addObject(object2);
-
-        final Viewport viewport = new Viewport();
-        window.add(viewport);
-        viewport.setSize(window.getSize());
-        viewport.setVisible(true);
-
-        getSyncScheduler().registerTask(new TaskAdapter() {
-            @Override
-            public void execute(@Nonnull Duration delta) {
-                viewport.render(new ViewportRenderContext(
-                        level,
-                        object2.getLocation(),
-                        object2.getRotation(),
-                        List.of(object2)
-                ));
-            }
-        });
-
-
-        getAsyncScheduler().registerTask(new TaskAdapter() {
-            @Override
-            public void execute(@Nonnull Duration delta) {
-                System.out.println("Object 1: " + object.getLocation() + " " + object.getAcceleration());
-                System.out.println("Object 2: " + object2.getLocation() + " " + object2.getAcceleration());
-            }
-
-            @Nonnull
-            @Override
-            public Duration getInterval() {
-                return new Duration(1000);
-            }
-        });
 
         final boolean FALSE = false; // Put breakpoint here for easy debugging
 
@@ -152,13 +120,96 @@ public final class Artemis {
      * Stops the engine.
      */
     public static void stop() {
+        // Dispose window
+        window.removeAll();
+        window.dispose();
+
         // Stop modules
         eventManager.stop();
         levelManager.stop();
+        commandManager.stop();
 
         // Stop schedulers
         syncScheduler.stop();
         asyncScheduler.stop();
+
+        // Save data
+        save();
+    }
+
+    /**
+     * Loads data from disk.
+     */
+    public static void load() {
+
+    }
+
+    /**
+     * Saves data from disk.
+     */
+    public static void save() {
+
+    }
+
+    //
+    // Client setup
+    //
+
+    /**
+     * Initializes local player.
+     */
+    private static void initializeLocalPlayer() {
+        sessionManager.setLocalPlayer(new LocalPlayer(
+                UUID.randomUUID(),
+                "ArtemisPlayer",
+                new DummyObject()
+        ));
+    }
+
+    /**
+     * Opens the main window.
+     */
+    private static void openWindow() {
+        window.setSize(1920, 1080);
+        window.addWindowListener(new ExitOnCloseListener()); // Use this instead of setting behavior to EXIT_ON_CLOSE
+        window.setVisible(true);
+    }
+
+    /**
+     * Initializes the start screen.
+     */
+    private static void showStartScreen() {
+        final StartScreen startScreen = new StartScreen();
+        window.add(startScreen);
+
+        startScreen.setSize(window.getSize());
+        startScreen.setVisible(true);
+    }
+
+    //
+    // Server setup
+    //
+
+    /**
+     * Initializes levels.
+     */
+    private static void initializeLevels() {
+
+    }
+
+    /**
+     * Opens network to allow players to join.
+     */
+    private static void openNetwork() {
+
+    }
+
+    //
+    // Common setup
+    //
+
+    private static void registerCommands() {
+        commandManager.addCommand(new StopCommand());
     }
 
     //
@@ -215,6 +266,15 @@ public final class Artemis {
         return sessionManager;
     }
 
+    /**
+     * Gets the command manager.
+     * @return {@link CommandManager}
+     */
+    @Nonnull
+    public static CommandManager getCommandManager() {
+        return commandManager;
+    }
+
     //
     // Modules
     //
@@ -223,6 +283,7 @@ public final class Artemis {
     private static final EventManager eventManager = new EventManager();
     private static final LevelManager levelManager = new LevelManager();
     private static final SessionManager sessionManager = new SessionManager();
+    private static final CommandManager commandManager = new CommandManager();
 
     //
     // UI getters
@@ -242,4 +303,22 @@ public final class Artemis {
     // UI
     //
     private static final UIWindow window = new UIWindow(GAME_TITLE + " " + GAME_VERSION);
+
+    //
+    // Command getters
+    //
+
+    /**
+     * Gets the console command sender.
+     * @return {@link CommandSender}
+     */
+    @Nonnull
+    public static CommandSender getConsoleCommandSender() {
+        return consoleCommandSender;
+    }
+
+    //
+    // Commands
+    //
+    private static final CommandSender consoleCommandSender = new ConsoleCommandSender();
 }

@@ -1,5 +1,7 @@
 package oasis.artemis.ui.component;
 
+import oasis.artemis.ui.window.UIWindow;
+
 import javax.annotation.Nonnull;
 import javax.swing.*;
 import java.awt.*;
@@ -58,12 +60,12 @@ public class UIComponent extends JPanel {
      *
      * @param frame Frame this component is in
      */
-    public void onComponentShown(@Nonnull JFrame frame) {}
+    public void onComponentShown(@Nonnull UIWindow frame) {}
 
     /**
      * Called when this component is made invisible.
      *
      * @param frame Frame this component is in
      */
-    public void onComponentHidden(@Nonnull JFrame frame) {}
+    public void onComponentHidden(@Nonnull UIWindow frame) {}
 }

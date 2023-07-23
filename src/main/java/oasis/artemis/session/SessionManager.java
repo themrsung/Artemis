@@ -1,5 +1,6 @@
 package oasis.artemis.session;
 
+import oasis.artemis.session.player.LocalPlayer;
 import oasis.artemis.session.player.Player;
 
 import javax.annotation.Nonnull;
@@ -60,6 +61,16 @@ public class SessionManager {
     }
 
     /**
+     * Gets the local player of this session.
+     *
+     * @return {@link LocalPlayer}
+     */
+    @Nullable
+    public LocalPlayer getLocalPlayer() {
+        return localPlayer;
+    }
+
+    /**
      * Adds a player to this session.
      *
      * @param player Player to add
@@ -78,8 +89,37 @@ public class SessionManager {
     }
 
     /**
+     * Sets the local player.
+     * <p>
+     * If the local player has not been registered yet,
+     * this will automatically register the player.
+     * </p>
+     * <p>
+     * If given player is {@code null},
+     * the existing player will be automatically unregistered.
+     * </p>
+     *
+     * @param localPlayer Local player to set to
+     */
+    public void setLocalPlayer(@Nullable LocalPlayer localPlayer) {
+        if (localPlayer != null) {
+            addPlayer(localPlayer);
+        } else if (this.localPlayer != null) {
+            removePlayer(this.localPlayer);
+        }
+
+        this.localPlayer = localPlayer;
+    }
+
+    /**
      * A set of players.
      */
     @Nonnull
     private final Set<Player> players = new HashSet<>();
+
+    /**
+     * The local player of this session.
+     */
+    @Nullable
+    private LocalPlayer localPlayer = null;
 }
