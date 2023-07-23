@@ -54,7 +54,7 @@ public class CommandManager {
         final List<String> params = split.length > 1 ? List.of(Arrays.copyOfRange(split, 1, split.length)) : List.of();
 
         commands.forEach(c -> {
-            if (!c.getName().equalsIgnoreCase(command)) return;
+            if (!c.getName().equalsIgnoreCase(command) && !c.getAliases().contains(command.toLowerCase())) return;
 
             final CommandExecutor executor = c.getExecutor();
             if (executor == null) return;

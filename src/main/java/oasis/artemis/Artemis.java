@@ -3,7 +3,8 @@ package oasis.artemis;
 import oasis.artemis.command.CommandSender;
 import oasis.artemis.command.ConsoleCommandSender;
 import oasis.artemis.command.lifecycle.CommandManager;
-import oasis.artemis.command.server.stop.StopCommand;
+import oasis.artemis.command.game.list.ListCommand;
+import oasis.artemis.command.game.stop.StopCommand;
 import oasis.artemis.event.lifecycle.EventManager;
 import oasis.artemis.level.lifecycle.LevelManager;
 import oasis.artemis.listener.physics.CollisionListener;
@@ -42,7 +43,7 @@ public final class Artemis {
     /**
      * The type of this Artemis instance.
      */
-    public static final InstanceType INSTANCE_TYPE = InstanceType.CLIENT;
+    public static final InstanceType INSTANCE_TYPE = InstanceType.SERVER;
 
     //
     // Public methods
@@ -210,6 +211,7 @@ public final class Artemis {
 
     private static void registerCommands() {
         commandManager.addCommand(new StopCommand());
+        commandManager.addCommand(new ListCommand());
     }
 
     //

@@ -1,4 +1,4 @@
-package oasis.artemis.command.server.stop;
+package oasis.artemis.command.game.stop;
 
 import oasis.artemis.Artemis;
 import oasis.artemis.command.CommandExecutor;
