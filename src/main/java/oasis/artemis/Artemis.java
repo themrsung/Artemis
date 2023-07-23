@@ -18,12 +18,10 @@ import oasis.artemis.ui.listener.ExitOnCloseListener;
 import oasis.artemis.ui.window.UIWindow;
 import oasis.artemis.util.geometry.profile.SphereProfile;
 import oasis.artemis.util.math.Quaternion;
-import oasis.artemis.util.math.RotationBuilder;
 import oasis.artemis.util.math.Vector;
 import org.joda.time.Duration;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
