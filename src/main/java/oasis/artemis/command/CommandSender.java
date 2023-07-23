@@ -9,6 +9,7 @@ import javax.annotation.Nonnull;
 public interface CommandSender {
     /**
      * Sends a message to this command sender.
+     *
      * @param message Message to send
      */
     void sendMessage(@Nonnull String message);

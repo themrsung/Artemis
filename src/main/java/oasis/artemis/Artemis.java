@@ -2,9 +2,9 @@ package oasis.artemis;
 
 import oasis.artemis.command.CommandSender;
 import oasis.artemis.command.ConsoleCommandSender;
-import oasis.artemis.command.lifecycle.CommandManager;
 import oasis.artemis.command.game.list.ListCommand;
 import oasis.artemis.command.game.stop.StopCommand;
+import oasis.artemis.command.lifecycle.CommandManager;
 import oasis.artemis.event.lifecycle.EventManager;
 import oasis.artemis.level.lifecycle.LevelManager;
 import oasis.artemis.listener.physics.CollisionListener;
@@ -270,6 +270,7 @@ public final class Artemis {
 
     /**
      * Gets the command manager.
+     *
      * @return {@link CommandManager}
      */
     @Nonnull
@@ -312,6 +313,7 @@ public final class Artemis {
 
     /**
      * Gets the console command sender.
+     *
      * @return {@link CommandSender}
      */
     @Nonnull

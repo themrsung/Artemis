@@ -9,7 +9,10 @@ import javax.annotation.Nonnull;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * <h2>CommandManager</h2>
@@ -44,7 +47,7 @@ public class CommandManager {
      * Handles notifying command executors.
      *
      * @param sender Sender of command
-     * @param input Raw input string
+     * @param input  Raw input string
      */
     public void onCommand(@Nonnull CommandSender sender, @Nonnull String input) {
         final String[] split = input.split(" ");
@@ -69,6 +72,7 @@ public class CommandManager {
 
     /**
      * Gets a set of all commands currently registered.
+     *
      * @return Set of commands
      */
     @Nonnull
@@ -78,6 +82,7 @@ public class CommandManager {
 
     /**
      * Gets a command by name.
+     *
      * @param name Name of command
      * @return {@link Command}
      * @throws NullPointerException When command cannot be found
@@ -93,11 +98,12 @@ public class CommandManager {
 
     /**
      * Adds a command.
+     *
      * @param command Command to add
      * @throws IllegalArgumentException When a command with the same name already exists
      */
     public void addCommand(@Nonnull Command command) throws IllegalArgumentException {
-        for (Command cmd: commands) {
+        for (Command cmd : commands) {
             if (cmd.getName().equalsIgnoreCase(command.getName())) {
                 throw new IllegalArgumentException("Command with the same name already exists.");
             }
@@ -108,6 +114,7 @@ public class CommandManager {
 
     /**
      * Removes a command.
+     *
      * @param command Command to remove
      */
     public void removeCommand(@Nonnull Command command) {

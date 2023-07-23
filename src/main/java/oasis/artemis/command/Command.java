@@ -16,6 +16,7 @@ public abstract class Command {
 
     /**
      * Creates a new command.
+     *
      * @param name Name of command
      */
     public Command(@Nonnull String name) {
@@ -24,7 +25,8 @@ public abstract class Command {
 
     /**
      * Creates a new command.
-     * @param name Name of command
+     *
+     * @param name    Name of command
      * @param aliases List of aliases
      */
     public Command(@Nonnull String name, @Nonnull List<String> aliases) {
@@ -33,7 +35,8 @@ public abstract class Command {
 
     /**
      * Creates a new command.
-     * @param name Name of command
+     *
+     * @param name     Name of command
      * @param executor Executor of command
      */
     public Command(@Nonnull String name, @Nullable CommandExecutor executor) {
@@ -42,8 +45,9 @@ public abstract class Command {
 
     /**
      * Creates a new command.
-     * @param name Name of command
-     * @param aliases List of aliases
+     *
+     * @param name     Name of command
+     * @param aliases  List of aliases
      * @param executor Executor of command
      */
     public Command(@Nonnull String name, @Nonnull List<String> aliases, @Nullable CommandExecutor executor) {
@@ -69,6 +73,7 @@ public abstract class Command {
 
     /**
      * Gets the name of this command.
+     *
      * @return Name
      */
     @Nonnull
@@ -78,6 +83,7 @@ public abstract class Command {
 
     /**
      * Gets a list of aliases of this command.
+     *
      * @return List of aliases
      */
     @Nonnull
@@ -87,6 +93,7 @@ public abstract class Command {
 
     /**
      * Gets the executor of this command.
+     *
      * @return {@link CommandExecutor} if found, {@code null} if not
      */
     @Nullable
@@ -100,6 +107,7 @@ public abstract class Command {
 
     /**
      * Sets the executor of this command.
+     *
      * @param executor Executor
      */
     public void setExecutor(@Nullable CommandExecutor executor) {
