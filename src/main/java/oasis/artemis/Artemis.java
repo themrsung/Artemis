@@ -3,19 +3,15 @@ package oasis.artemis;
 import oasis.artemis.event.lifecycle.EventManager;
 import oasis.artemis.level.lifecycle.LevelManager;
 import oasis.artemis.network.SessionManager;
-import oasis.artemis.task.TaskAdapter;
 import oasis.artemis.task.lifecycle.AsyncScheduler;
 import oasis.artemis.task.lifecycle.Scheduler;
 import oasis.artemis.task.lifecycle.SyncScheduler;
 import oasis.artemis.task.physics.*;
 import oasis.artemis.ui.listener.ExitOnCloseListener;
 import oasis.artemis.ui.window.UIWindow;
-import oasis.artemis.util.math.Matrix;
-import oasis.artemis.util.math.Quaternion;
 import oasis.artemis.util.math.RotationBuilder;
 import oasis.artemis.util.math.Vector;
 import org.joda.time.DateTime;
-import org.joda.time.Duration;
 
 import javax.annotation.Nonnull;
 
