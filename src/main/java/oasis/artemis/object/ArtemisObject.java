@@ -157,7 +157,7 @@ public interface ArtemisObject {
     Quaternion getRotation();
 
     /**
-     * Gets the rate of rotation of this oobject.
+     * Gets the rate of rotation of this object.
      *
      * @return Rate of rotation
      */

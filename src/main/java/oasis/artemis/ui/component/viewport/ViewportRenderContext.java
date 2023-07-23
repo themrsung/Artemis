@@ -12,9 +12,9 @@ import java.util.List;
  * <h2>ViewportRenderContext</h2>
  * <p>Contextual data given to a viewport to render a level.</p>
  *
- * @param level Level to render
- * @param origin Origin of viewport
- * @param angle Angle to view level
+ * @param level           Level to render
+ * @param origin          Origin of viewport
+ * @param angle           Angle to view level
  * @param renderBlacklist List of objects to not render
  */
 public record ViewportRenderContext(

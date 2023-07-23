@@ -1,9 +1,5 @@
 package oasis.artemis.util.math;
 
-import oasis.artemis.util.math.Matrix;
-import oasis.artemis.util.math.Quaternion;
-import oasis.artemis.util.math.Vector;
-
 import javax.annotation.Nonnull;
 import java.util.Arrays;
 

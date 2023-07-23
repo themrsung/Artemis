@@ -1,4 +1,4 @@
-package oasis.artemis.network;
+package oasis.artemis.session;
 
 /**
  * <h2>SessionManager</h2>
