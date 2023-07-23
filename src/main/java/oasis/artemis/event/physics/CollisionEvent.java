@@ -10,11 +10,11 @@ import javax.annotation.Nonnull;
  * <h2>CollisionEvent</h2>
  * <p>This is called when two objects overlap for the first time.</p>
  */
-public final class CollisionEvent implements Cancellable {
+public class CollisionEvent implements Cancellable {
     /**
      * Creates a new collision event.
      *
-     * @param objects Pair of objects which collided.
+     * @param objects Pair of objects which collided
      */
     public CollisionEvent(@Nonnull Pair<ArtemisObject> objects) {
         this.objects = objects;
@@ -26,7 +26,7 @@ public final class CollisionEvent implements Cancellable {
     private boolean cancelled;
 
     /**
-     * Gets the pair of objects which collided.
+     * Gets the pair of objects involved in this collision.
      *
      * @return Pair of collided objects
      */

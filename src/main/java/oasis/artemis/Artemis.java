@@ -6,7 +6,6 @@ import oasis.artemis.network.SessionManager;
 import oasis.artemis.task.lifecycle.AsyncScheduler;
 import oasis.artemis.task.lifecycle.Scheduler;
 import oasis.artemis.task.lifecycle.SyncScheduler;
-import oasis.artemis.task.physics.*;
 import oasis.artemis.ui.listener.ExitOnCloseListener;
 import oasis.artemis.ui.window.UIWindow;
 import oasis.artemis.util.math.RotationBuilder;
@@ -52,16 +51,10 @@ public final class Artemis {
      */
     public static void start() {
         // Register first party tasks
-        getSyncScheduler().registerTasks(
-                new CheckOverlapTask(),
-                new GravityTask(),
-                new MovementTask(),
-                new ResistanceTask(),
-                new RotationTask()
-        );
 
-        // Start the event manager
+        // Start modules
         eventManager.start();
+        levelManager.start();
 
         // Start schedulers
         syncScheduler.start();
@@ -95,6 +88,10 @@ public final class Artemis {
      * Stops the engine.
      */
     public static void stop() {
+        // Stop modules
+        eventManager.stop();
+        levelManager.stop();
+
         // Stop schedulers
         syncScheduler.stop();
         asyncScheduler.stop();

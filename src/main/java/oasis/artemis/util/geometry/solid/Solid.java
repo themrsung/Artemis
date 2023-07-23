@@ -5,6 +5,7 @@ import oasis.artemis.util.math.Vector;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.Immutable;
 import java.util.List;
 
 /**
@@ -13,6 +14,7 @@ import java.util.List;
  * A solid represents a three-dimensional area of space.
  * </p>
  */
+@Immutable
 public interface Solid {
     //
     // Properties
