@@ -1,17 +1,23 @@
 package oasis.artemis;
 
 import oasis.artemis.event.lifecycle.EventManager;
+import oasis.artemis.level.Level;
+import oasis.artemis.level.SimpleLevel;
 import oasis.artemis.level.lifecycle.LevelManager;
+import oasis.artemis.listener.physics.CollisionListener;
 import oasis.artemis.network.SessionManager;
+import oasis.artemis.object.ArtemisObject;
+import oasis.artemis.object.SimpleObject;
+import oasis.artemis.task.TaskAdapter;
 import oasis.artemis.task.lifecycle.AsyncScheduler;
 import oasis.artemis.task.lifecycle.Scheduler;
 import oasis.artemis.task.lifecycle.SyncScheduler;
-import oasis.artemis.task.physics.*;
 import oasis.artemis.ui.listener.ExitOnCloseListener;
 import oasis.artemis.ui.window.UIWindow;
+import oasis.artemis.util.geometry.profile.SphereProfile;
 import oasis.artemis.util.math.RotationBuilder;
 import oasis.artemis.util.math.Vector;
-import org.joda.time.DateTime;
+import org.joda.time.Duration;
 
 import javax.annotation.Nonnull;
 
@@ -51,17 +57,14 @@ public final class Artemis {
      * Starts the engine.
      */
     public static void start() {
-        // Register first party tasks
-        getSyncScheduler().registerTasks(
-                new CheckOverlapTask(),
-                new GravityTask(),
-                new MovementTask(),
-                new ResistanceTask(),
-                new RotationTask()
+        // Register listeners
+        eventManager.registerListeners(
+                new CollisionListener()
         );
 
-        // Start the event manager
+        // Start modules
         eventManager.start();
+        levelManager.start();
 
         // Start schedulers
         syncScheduler.start();
@@ -76,12 +79,47 @@ public final class Artemis {
         ////////////// START OF DEBUG CODE //////////////
         /////////////////////////////////////////////////
 
-        Vector v = new Vector(10, 0, 10);
-        final Vector p = v.rotate(RotationBuilder.fromRollDegrees(90).build());
+        final Level level = SimpleLevel.builder()
+                .name("SimpleLevel")
+                .gravity(Level.EARTH_GRAVITY)
+                .build();
 
-        System.out.println(p);
+        levelManager.addLevel(level);
 
-        System.out.println(DateTime.now());
+        final ArtemisObject object = SimpleObject.builder()
+                .geometry(new SphereProfile(1))
+                .location(new Vector(0, 0, 500))
+                .mass(100)
+                .acceleration(new Vector(0, 0, -60))
+                .rotationRate(RotationBuilder.fromYawDegrees(45).build())
+                .build();
+
+        level.addObject(object);
+
+        final ArtemisObject object2 = SimpleObject.builder()
+                .geometry(new SphereProfile(1))
+                .location(new Vector(0, 0, -500))
+                .mass(100)
+                .acceleration(new Vector(0, 0, 60))
+                .rotationRate(RotationBuilder.fromYawDegrees(-45).build())
+                .build();
+
+        level.addObject(object2);
+
+
+        getAsyncScheduler().registerTask(new TaskAdapter() {
+            @Override
+            public void execute(@Nonnull Duration delta) {
+                System.out.println("Object 1: " + object.getLocation() + " " + object.getAcceleration());
+                System.out.println("Object 2: " + object2.getLocation() + " " + object2.getAcceleration());
+            }
+
+            @Nonnull
+            @Override
+            public Duration getInterval() {
+                return new Duration(1000);
+            }
+        });
 
         final boolean FALSE = false; // Put breakpoint here for easy debugging
 
@@ -95,6 +133,10 @@ public final class Artemis {
      * Stops the engine.
      */
     public static void stop() {
+        // Stop modules
+        eventManager.stop();
+        levelManager.stop();
+
         // Stop schedulers
         syncScheduler.stop();
         asyncScheduler.stop();

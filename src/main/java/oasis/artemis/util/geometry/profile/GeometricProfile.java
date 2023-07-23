@@ -4,6 +4,7 @@ import oasis.artemis.object.ArtemisObject;
 import oasis.artemis.util.geometry.solid.Solid;
 
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.Immutable;
 
 /**
  * <h2>GeometricProfile</h2>
@@ -14,6 +15,7 @@ import javax.annotation.Nonnull;
  * solids in real-time. (with respect to their parent object's location and rotation)
  * </p>
  */
+@Immutable
 public interface GeometricProfile {
     //
     // Building

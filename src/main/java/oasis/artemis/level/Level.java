@@ -1,10 +1,8 @@
 package oasis.artemis.level;
 
-import oasis.artemis.annotation.Numeric;
 import oasis.artemis.object.ArtemisObject;
-import oasis.artemis.util.group.Pair;
 import oasis.artemis.util.math.Vector;
-import oasis.artemis.util.physics.PhysicsContext;
+import org.joda.time.Duration;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -13,44 +11,65 @@ import java.util.UUID;
 
 /**
  * <h2>Level</h2>
- * <p>
- * A level represents an in-game level.
- * Levels can be dynamic (e.g. worlds) or static (e.g. start screens).
- * </p>
+ * <p>Represents an in-game level.</p>
  */
 public interface Level {
+    //
+    // Constants
+    //
+
+    /**
+     * The gravity of Earth.
+     */
+    Vector EARTH_GRAVITY = new Vector(0, -9.807, 0);
+
+    /**
+     * The air density of Earth.
+     */
+    double EARTH_AIR_DENSITY = 1.293;
+
     //
     // Identification
     //
 
     /**
      * Gets the unique identifier of this level.
-     * Unique IDs must be consistent within the scope of its runtime.
      *
-     * @return Unique identifier of this level
+     * @return Unique ID
      */
     @Nonnull
     UUID getUniqueId();
+
+    /**
+     * Gets the name of this level.
+     *
+     * @return Name
+     */
+    @Nonnull
+    String getName();
+
+    //
+    // Tick
+    //
+
+    /**
+     * Called every tick.
+     *
+     * @param delta Duration between the last tick and now
+     */
+    void tick(@Nonnull Duration delta);
 
     //
     // Objects
     //
 
     /**
-     * Gets a set of objects within this level.
+     * Gets a set of objects in this level.
      *
      * @return Set of objects
      */
     @Nonnull
     Set<ArtemisObject> getObjects();
-
-    /**
-     * Gets a set of overlapping objects.
-     *
-     * @return Set of overlapping objects
-     */
-    @Nonnull
-    Set<Pair<ArtemisObject>> getOverlappingObjects();
 
     /**
      * Adds an object to this level.
@@ -66,27 +85,12 @@ public interface Level {
      */
     void removeObject(@Nonnull ArtemisObject object);
 
-    /**
-     * Checks for overlapping objects and handles collisions.
-     */
-    void checkOverlaps();
-
     //
     // Physics
     //
 
     /**
-     * Gets the physics context of given object.
-     *
-     * @param object Object to query
-     * @return Physics context of object
-     * @throws IllegalArgumentException When the object is not a member of this level
-     */
-    @Nonnull
-    PhysicsContext getPhysicsContext(@Nonnull ArtemisObject object) throws IllegalArgumentException;
-
-    /**
-     * Gets the gravity of this level.
+     * Gets the gravity vector of this level.
      *
      * @return Gravity
      */
@@ -94,7 +98,7 @@ public interface Level {
     Vector getGravity();
 
     /**
-     * Gets the air density of this world.
+     * Gets the air density of this level.
      *
      * @return Air density
      */
@@ -102,31 +106,17 @@ public interface Level {
     double getAirDensity();
 
     /**
-     * Gets the ground level of this world.
-     *
-     * @return Ground level
-     */
-    @Numeric
-    double getGroundLevel();
-
-    /**
-     * Sets the gravity of this level.
+     * Sets the gravity vector of this level.
      *
      * @param gravity Gravity
      */
     void setGravity(@Nonnull Vector gravity);
 
     /**
-     * Sets the air density of this level.
+     * Sets the air density of this world.
      *
      * @param density Air density
      */
     void setAirDensity(@Nonnegative double density);
 
-    /**
-     * Sets the ground level of this level.
-     *
-     * @param level Ground level
-     */
-    void setGroundLevel(@Numeric double level);
 }

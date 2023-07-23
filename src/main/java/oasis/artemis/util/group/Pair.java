@@ -2,10 +2,7 @@ package oasis.artemis.util.group;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * <h2>Pair</h2>
@@ -48,7 +45,13 @@ public class Pair<T> implements Iterable<T> {
     @Nonnull
     public static <T> Set<Pair<T>> pairsOfSet(@Nonnull Set<T> set) {
         final Set<Pair<T>> pairs = new HashSet<>();
-        set.forEach(e1 -> set.forEach(e2 -> pairs.add(new Pair<>(e1, e2))));
+        set.forEach(e1 -> set.stream().filter(e -> !e.equals(e1)).forEach(e2 -> {
+            final Pair<T> pair = new Pair<>(e1, e2);
+            if (pairs.contains(pair)) return;
+
+            pairs.add(new Pair<>(e1, e2));
+        }));
+
         return pairs;
     }
 
@@ -112,6 +115,19 @@ public class Pair<T> implements Iterable<T> {
     public boolean equals(@Nonnull Pair<T> other) {
         return (first.equals(other.first) && second.equals(other.second))
                 || (second.equals(other.first) && first.equals(other.second));
+    }
+    /**
+     * Checks for equality without regards to the elements' order.
+     *
+     * @param o other object
+     * @return {@code true} if the contents are equal
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Pair<?> pair)) return false;
+        return (Objects.equals(first, pair.first) && Objects.equals(second, pair.second))
+                || (Objects.equals(second, pair.first) && Objects.equals(first, pair.second));
     }
 
     //
