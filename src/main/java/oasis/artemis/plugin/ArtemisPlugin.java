@@ -6,7 +6,7 @@ import javax.annotation.Nonnull;
 
 /**
  * <h2>ArtemisPlugin</h2>
- * <p>A superclass for Artemis plugins.</p>
+ * <p>A superinterface for Artemis plugins.</p>
  */
 public interface ArtemisPlugin {
     //
