@@ -1,7 +1,9 @@
 package oasis.artemis.object;
 
 import oasis.artemis.util.geometry.profile.GeometricProfile;
+import oasis.artemis.util.geometry.profile.SphereProfile;
 import oasis.artemis.util.geometry.solid.Solid;
+import oasis.artemis.util.geometry.solid.Sphere;
 import oasis.artemis.util.math.Quaternion;
 import oasis.artemis.util.math.Vector;
 import oasis.artemis.util.physics.Physics;
@@ -77,7 +79,7 @@ public abstract class AbstractObject implements ArtemisObject {
         protected Builder() {
             this.uniqueId = UUID.randomUUID();
             this.mass = 0;
-            this.geometry = null;
+            this.geometry = new SphereProfile(Double.MIN_VALUE);
             this.location = Vector.ZERO;
             this.acceleration = Vector.ZERO;
             this.rotation = Quaternion.IDENTITY_QUATERNION;
@@ -192,6 +194,7 @@ public abstract class AbstractObject implements ArtemisObject {
 
     @Override
     public void tick(@Nonnull Duration delta) {
+        // Convert delta to seconds
         final double seconds = delta.getMillis() / 1000d;
 
         // Handle location change
@@ -238,6 +241,16 @@ public abstract class AbstractObject implements ArtemisObject {
         if (v <= 0) return 0;
 
         return mass / v;
+    }
+
+    @Override
+    public double getDragCoefficient() {
+        return getSolid().getDragCoefficient(getAcceleration().negate());
+    }
+
+    @Override
+    public double getCrossSection() {
+        return getSolid().getCrossSection(getAcceleration().negate());
     }
 
     @Override
@@ -344,15 +357,5 @@ public abstract class AbstractObject implements ArtemisObject {
     @Override
     public void accelerate(@Nonnull Vector acceleration) {
         setAcceleration(getAcceleration().add(acceleration));
-    }
-
-    @Override
-    public void accelerate(@Nonnull Vector direction, double force) {
-        accelerate(Physics.acceleration(this, direction, force));
-    }
-
-    @Override
-    public void decelerate(double force) {
-        accelerate(Physics.acceleration(this, getAcceleration().negate(), force));
     }
 }

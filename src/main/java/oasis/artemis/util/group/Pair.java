@@ -48,7 +48,7 @@ public class Pair<T> implements Iterable<T> {
     @Nonnull
     public static <T> Set<Pair<T>> pairsOfSet(@Nonnull Set<T> set) {
         final Set<Pair<T>> pairs = new HashSet<>();
-        set.forEach(e1 -> set.forEach(e2 -> pairs.add(new Pair<>(e1, e2))));
+        set.forEach(e1 -> set.stream().filter(e -> !e.equals(e1)).forEach(e2 -> pairs.add(new Pair<>(e1, e2))));
         return pairs;
     }
 

@@ -60,6 +60,20 @@ public interface ArtemisObject {
     double getDensity();
 
     /**
+     * Gets the current coefficient of drag of this object.
+     * @return Drag coefficient
+     */
+    @Nonnegative
+    double getDragCoefficient();
+
+    /**
+     * Gets the current cross-section of this object.
+     * @return Cross-section
+     */
+    @Nonnegative
+    double getCrossSection();
+
+    /**
      * Gets the geometric profile of this object.
      *
      * @return Geometric profile
@@ -197,20 +211,4 @@ public interface ArtemisObject {
      * @param acceleration Acceleration to apply
      */
     void accelerate(@Nonnull Vector acceleration);
-
-    /**
-     * Accelerates this object.
-     *
-     * @param direction Direction of acceleration
-     * @param force     Force of acceleration
-     */
-    void accelerate(@Nonnull Vector direction, @Numeric double force);
-
-    /**
-     * Decelerates this object.
-     * If the object has no motion, this will do nothing.
-     *
-     * @param force Force of deceleration
-     */
-    void decelerate(@Numeric double force);
 }

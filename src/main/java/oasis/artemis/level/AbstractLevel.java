@@ -13,6 +13,7 @@ import javax.annotation.Nonnull;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicReference;
 
 public abstract class AbstractLevel implements Level {
     //
@@ -172,11 +173,14 @@ public abstract class AbstractLevel implements Level {
 
     @Override
     public void tick(@Nonnull Duration delta) {
+        // Convert delta to seconds
+        final double seconds = delta.getMillis() / 1000d;
+
         // Uses copied set to prevent concurrent modification exception
         final Set<ArtemisObject> objects = getObjects();
 
         // Apply gravity
-        objects.forEach(o -> o.accelerate(gravity));
+        objects.forEach(o -> o.accelerate(gravity.multiply(seconds)));
 
         // Tick objects
         objects.forEach(o -> o.tick(delta));
@@ -194,6 +198,29 @@ public abstract class AbstractLevel implements Level {
             } else {
                 overlappingObjects.remove(pair);
             }
+        });
+
+        // Apply fluid resistance
+        objects.forEach(o -> {
+            final AtomicReference<Double> fluidDensity = new AtomicReference<>(airDensity);
+            overlappingObjects.forEach(p -> {
+                if (!p.contains(o)) return;
+                fluidDensity.set(Math.max(fluidDensity.get(), p.other(o).getDensity()));
+            });
+
+            final double dragForce = o.getDragCoefficient()
+                    * fluidDensity.get()
+                    * o.getCrossSection()
+                    * Math.pow(o.getVelocity(), 2);
+
+            if (!Double.isFinite(dragForce)) return;
+            if (dragForce <= 0) return;
+
+            final double kineticEnergy = 0.5 * o.getMass() * o.getVelocity();
+            if (kineticEnergy == 0) return;
+
+            final double decelerationRatio = Math.max(Math.min(1, 1 - (dragForce / kineticEnergy)), 0);
+//            o.setAcceleration(o.getAcceleration().multiply(decelerationRatio));
         });
     }
 

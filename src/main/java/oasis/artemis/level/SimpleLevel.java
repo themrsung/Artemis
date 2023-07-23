@@ -55,7 +55,7 @@ public class SimpleLevel extends AbstractLevel {
      *
      * @param builder Builder to use
      */
-    public SimpleLevel(@Nonnull Builder builder) {
+    protected SimpleLevel(@Nonnull Builder builder) {
         super(builder);
     }
 
