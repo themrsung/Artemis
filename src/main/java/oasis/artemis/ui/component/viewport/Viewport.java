@@ -11,7 +11,6 @@ import oasis.artemis.util.math.Vector;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +36,7 @@ public class Viewport extends UIComponent {
 
     /**
      * Renders given contextual data to this viewport.
+     *
      * @param context Render context
      * @see ViewportRenderContext
      */
@@ -64,6 +64,7 @@ public class Viewport extends UIComponent {
 
     /**
      * Paints vertices to screen.
+     *
      * @param g the <code>Graphics</code> object to protect
      */
     @Override
