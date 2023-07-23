@@ -15,7 +15,7 @@ import java.util.UUID;
  * <h2>SimpleLevel</h2>
  * <p>A basic level.</p>
  */
-public class SimpleLevel extends AbstractLevel {
+public final class SimpleLevel extends AbstractLevel {
     //
     // Constructors
     //
@@ -56,7 +56,7 @@ public class SimpleLevel extends AbstractLevel {
      *
      * @param builder Builder to use
      */
-    protected SimpleLevel(@Nonnull Builder builder) {
+    private SimpleLevel(@Nonnull Builder builder) {
         super(builder);
     }
 
@@ -67,7 +67,7 @@ public class SimpleLevel extends AbstractLevel {
     /**
      * Builder class for {@link SimpleLevel}
      */
-    public static class Builder extends AbstractLevel.Builder {
+    public static final class Builder extends AbstractLevel.Builder {
         private Builder() {}
 
         @Nonnull

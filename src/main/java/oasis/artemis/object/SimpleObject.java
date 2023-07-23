@@ -12,7 +12,7 @@ import java.util.UUID;
  * <h2>SimpleObject</h2>
  * <p>A simple object.</p>
  */
-public class SimpleObject extends AbstractObject {
+public final class SimpleObject extends AbstractObject {
     //
     // Constructors
     //
@@ -55,7 +55,7 @@ public class SimpleObject extends AbstractObject {
      *
      * @param builder Builder to use
      */
-    protected SimpleObject(@Nonnull Builder builder) {
+    private SimpleObject(@Nonnull Builder builder) {
         super(builder);
     }
 
@@ -66,7 +66,7 @@ public class SimpleObject extends AbstractObject {
     /**
      * Builder class for {@link SimpleObject}.
      */
-    public static class Builder extends AbstractObject.Builder {
+    public static final class Builder extends AbstractObject.Builder {
         private Builder() {}
 
         @Nonnull
