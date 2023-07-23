@@ -17,6 +17,6 @@ public final class RotationTask extends TaskAdapter {
         Artemis.getLevelManager().getLevels().forEach(l -> l.getObjects().stream()
                 .filter(Physical.class::isInstance)
                 .map(Physical.class::cast)
-                .forEach(o -> o.rotate(o.getRotationRate().divide(1000).scale(delta.getMillis()))));
+                .forEach(o -> o.rotate(o.getRotationRate().scale((double) delta.getMillis() / 1000))));
     }
 }
