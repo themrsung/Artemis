@@ -1,11 +1,14 @@
 package oasis.artemis.util.geometry;
 
+import oasis.artemis.annotation.Numeric;
 import oasis.artemis.util.math.Quaternion;
 import oasis.artemis.util.math.Vector;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 import java.awt.*;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * <h2>Vertex</h2>
@@ -15,7 +18,7 @@ import java.awt.*;
  * </p>
  */
 @Immutable
-public class Vertex {
+public class Vertex implements Iterable<Vector> {
     //
     // Constructors
     //
@@ -105,6 +108,31 @@ public class Vertex {
     //
     // Util
     //
+
+    /**
+     * Gets the iterator of the three vectors of this vertex.
+     * @return Iterator
+     */
+    @Override
+    @Nonnull
+    public Iterator<Vector> iterator() {
+        return List.of(p1, p2, p3).iterator();
+    }
+
+    /**
+     * Inflates this vertex to better represents its size.
+     * @param scale Scale to inflate by
+     * @return Inflated vertex
+     */
+    @Nonnull
+    public Vertex inflate(@Numeric double scale) {
+        return new Vertex(
+                p1.multiply(scale),
+                p2.multiply(scale),
+                p3.multiply(scale),
+                color
+        );
+    }
 
     /**
      * Transforms this vertex to a relative coordinate system,
