@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface CommandExecutor {
     /**
-     * Called on command
+     * Called on command.
      *
      * @param sender Sender of command
      * @param params List of parameters

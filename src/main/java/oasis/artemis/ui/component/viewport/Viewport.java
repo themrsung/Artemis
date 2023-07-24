@@ -85,7 +85,7 @@ public class Viewport extends UIComponent {
         new ArrayList<>(vertices).forEach(v -> {
             final Polygon p = new Polygon();
             v.forEach(point -> {
-                final Pair<Integer> coordinates = translateVector(point, 300);
+                final Pair<Integer> coordinates = translateVector(point, 500);
                 p.addPoint(coordinates.getFirst(), coordinates.getSecond());
             });
 
