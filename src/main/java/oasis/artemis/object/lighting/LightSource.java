@@ -17,6 +17,7 @@ public interface LightSource extends ArtemisObject {
 
     /**
      * Gets the direction of this light source.
+     *
      * @return Direction of light
      */
     @Nonnull
@@ -24,6 +25,7 @@ public interface LightSource extends ArtemisObject {
 
     /**
      * Gets the intensity of this light source.
+     *
      * @return Intensity of light
      */
     @Nonnegative
@@ -31,12 +33,14 @@ public interface LightSource extends ArtemisObject {
 
     /**
      * Sets the direction of this light source.
+     *
      * @param direction Direction of light
      */
     void setLightDirection(@Nonnull Vector direction);
 
     /**
      * Sets the intensity of this light source.
+     *
      * @param intensity Intensity
      */
     void setLightIntensity(@Nonnegative double intensity);

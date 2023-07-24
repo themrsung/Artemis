@@ -15,6 +15,7 @@ import java.awt.*;
 public final class Test {
     /**
      * Runs the test.
+     *
      * @param args Arguments
      */
     public static void main(@Nonnull String[] args) {
