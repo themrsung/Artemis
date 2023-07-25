@@ -111,14 +111,14 @@ public class Sphere implements Solid {
         final Vector f = centroid.add(new Vector(0, 0, -radius).rotate(rotation));
 
         return List.of(
-                new Vertex(a, b, f, Color.RED),
-                new Vertex(a, d, f, Color.BLUE),
-                new Vertex(c, b, f, Color.GREEN),
-                new Vertex(d, b, f, Color.CYAN),
-                new Vertex(c, e, a, Color.PINK),
-                new Vertex(d, e, a, Color.GRAY),
-                new Vertex(c, b, e, Color.DARK_GRAY),
-                new Vertex(d, b, e, Color.YELLOW)
+                new Vertex(a, f, d, Color.RED),
+                new Vertex(a, c, f, Color.BLUE),
+                new Vertex(b, f, c, Color.GREEN),
+                new Vertex(d, f, b, Color.CYAN),
+                new Vertex(a, e, c, Color.PINK),
+                new Vertex(a, d, e, Color.GRAY),
+                new Vertex(c, e, b, Color.DARK_GRAY),
+                new Vertex(b, e, d, Color.YELLOW)
         );
     }
 
