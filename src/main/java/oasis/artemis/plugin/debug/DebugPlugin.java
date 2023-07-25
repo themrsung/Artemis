@@ -35,7 +35,7 @@ public final class DebugPlugin extends SimplePlugin {
 
         final ArtemisObject player = SimpleObject.builder()
                 .location(new Vector(0, 0, -100))
-                .geometry(new SphereProfile(1))
+                .geometry(new SphereProfile(10))
                 .mass(100)
                 .build();
 

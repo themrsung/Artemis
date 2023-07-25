@@ -15,13 +15,13 @@ import oasis.artemis.plugin.debug.DebugPlugin;
 import oasis.artemis.plugin.lifecycle.PluginManager;
 import oasis.artemis.session.SessionManager;
 import oasis.artemis.session.player.LocalPlayer;
+import oasis.artemis.task.io.AutoSaveTask;
 import oasis.artemis.task.lifecycle.AsyncScheduler;
 import oasis.artemis.task.lifecycle.Scheduler;
 import oasis.artemis.task.lifecycle.SyncScheduler;
 import oasis.artemis.ui.component.start.StartScreen;
 import oasis.artemis.ui.listener.ExitOnCloseListener;
 import oasis.artemis.ui.window.UIWindow;
-import oasis.artemis.util.math.Vector;
 
 import javax.annotation.Nonnull;
 import java.util.UUID;
@@ -76,6 +76,11 @@ public final class Artemis {
         // Register listeners
         eventManager.registerListeners(
                 new CollisionListener()
+        );
+
+        // Register tasks
+        asyncScheduler.registerTasks(
+                new AutoSaveTask()
         );
 
         // Start modules
